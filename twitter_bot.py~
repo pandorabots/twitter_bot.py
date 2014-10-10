@@ -6,7 +6,17 @@ import argparse
 import sys
 from pb_py import main as pandorabots_api
 
+host = 'demobots.pandorabots.com'
+botname = 'berry'
+username = 'barryadmin'
+api_key = 'pb133791216035704322186374406597679239884'
 
+access_token = '2815579497-5MH2YaHHMeOMNyN2q5V5VSHrKoE5mGTw6rzvkLQ'
+access_token_secret = 'QbMRTqPB4OUx0hDFpfNOtVsrMaPkf4FWM9WLg1LlAZKCH'
+
+consumer_key = 'KYJiPSE1Uuat0djXHz2aI7MY9'
+consumer_secret = '3tgAzKVaSofvE7AJ0nIC4UbItafuchzG52Ya6jtoX9OFDOjmV0'
+"""
 host = 'INSERT HOST SERVER HERE'
 botname = 'INSERT BOT NAME HERE'
 app_id = 'INSERT APPNAME HERE'
@@ -17,7 +27,7 @@ access_token_secret = 'INSERT ACCESS TOKEN SECRET HERE'
 
 consumer_key = 'INSERT CONSUMER KEY HERE'
 consumer_secret = 'INSERT CONSUMER SECRET HERE'
-
+"""
 def tweeter(output,screen_name):
     status_update = output + ' @' + screen_name
     print 'Tweeting back: ' + status_update
