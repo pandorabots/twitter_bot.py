@@ -24,8 +24,8 @@ def tweeter(output,screen_name):
     print 'Tweeting back: ' + status_update
     try:
         twitter_api.update_status(status_update)
-    except:
-        print tweepy.TweepError
+    except tweepy.TweepError as e:
+        print e
         print 'There was an error with your tweet'
 
 def query_bot(text, screen_name, cust_id):
@@ -122,7 +122,7 @@ def main():
             # follow the tweet author if not already
             if not is_following and not my_id==user_id:
                 twitter_api.create_friendship(id=user_id)
-                print "you are now following: " + screenname 
+                print "you are now following: " + screen_name 
             if screen_name != my_screen_name and str(tweet.id) not in tweet_id_list:
                 print "User " + author + ' @' + screen_name + ' tweeted: "' + text + '"'
                 # get the bot's response to the query
