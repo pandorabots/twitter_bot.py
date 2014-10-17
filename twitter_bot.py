@@ -7,7 +7,6 @@ import sys
 from pb_py import main as pandorabots_api
 
 
-
 host = 'INSERT HOST SERVER HERE'
 botname = 'INSERT BOT NAME HERE'
 app_id = 'INSERT APPNAME HERE'
@@ -118,7 +117,6 @@ def main():
             user_id = tweet.author.id
             author = tweet.author.name
             text = tweet.text
-            print text
             screen_name = tweet.author.screen_name
             main_tweet_dict[tweet.id] = [text,screen_name,author,str(user_id)]
             # follow the tweet author if not already
@@ -156,7 +154,7 @@ def Main(argv=None):
   args = parser.parse_args(argv[1:])
   if args.continuous:
       run()
-  if not args.continuous and not args.init:
+  else:
       main()
 
 if __name__ == "__main__":
