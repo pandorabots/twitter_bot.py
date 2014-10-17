@@ -7,6 +7,7 @@ import sys
 from pb_py import main as pandorabots_api
 
 
+
 host = 'INSERT HOST SERVER HERE'
 botname = 'INSERT BOT NAME HERE'
 app_id = 'INSERT APPNAME HERE'
@@ -17,6 +18,7 @@ access_token_secret = 'INSERT ACCESS TOKEN SECRET HERE'
 
 consumer_key = 'INSERT CONSUMER KEY HERE'
 consumer_secret = 'INSERT CONSUMER SECRET HERE'
+
 
 def tweeter(output,screen_name):
     status_update = output + ' @' + screen_name
@@ -68,13 +70,14 @@ def check_rate_limit_status():
         print 'You have reached your limit for mention checks in this rate limit window. Please wait a few minutes and try again.'
         return False
 
-def init():
-    ofile = open('tweet_log1.txt','w')
-    ofile.write('screen_name 478595937619542017 pbots_cust_id name user_id text\n')
-    ofile.close()
-
 def setup():
-    tweet_log = open('tweet_log.txt','rb')
+    try:
+        tweet_log = open('tweet_log.txt','rb')
+    except:
+        ofile = open('tweet_log.txt','w')
+        ofile.write('screen_name 478595937619542017 pbots_cust_id name user_id text\n')
+        ofile.close()
+        tweet_log = open('tweet_log.txt','rb')
     tweet_dict = {}
     last_tweet_id = ''
     #verify your credentials with twitter
@@ -134,7 +137,7 @@ def main():
             value = main_tweet_dict[key]
             maintain_log(str(key), value[0], value[1], value[2], str(value[3]))
     tweet_log.close()
-        
+
     
 tweet_dict, auth, twitter_api, me, my_id, my_screen_name, tweet_log = setup()
 
@@ -147,15 +150,10 @@ def run():
 def Main(argv=None):
   parser = argparse.ArgumentParser(
     description='creates Pandorabots Twitter interface')
-  parser.add_argument('--init',
-                      help='if this is the first time running the program set to true',
-                      metavar='ID', required=False)
   parser.add_argument('--continuous',
                       help='if you want the program to be continuous  set to true',
                       metavar='ID', required=False)
   args = parser.parse_args(argv[1:])
-  if args.init:
-      return init()
   if args.continuous:
       run()
   if not args.continuous and not args.init:
