@@ -6,7 +6,6 @@ import argparse
 import sys
 from pb_py import main as pandorabots_api
 
-
 host = 'INSERT HOST SERVER HERE'
 botname = 'INSERT BOT NAME HERE'
 app_id = 'INSERT APPNAME HERE'
@@ -104,15 +103,15 @@ def setup():
     tweet_log = open('tweet_log.txt','a')
     return tweet_dict, auth, twitter_api, me, my_id, my_screen_name, tweet_log
 
-def main():
+def main(last_tweet_id):
     # open tweet_log for appending
-    last_tweet_id = open('tweet_log.txt','rb').readlines()[-1].split()[1]
+    #last_tweet_id = open('tweet_log.txt','rb').readlines()[-1].split()[1]
     tweet_log = open('tweet_log.txt','a')
     if (check_rate_limit_status()):
         mentions = fetch_mentions(last_tweet_id)
         tweet_id_list = []
         main_tweet_dict = {}
-        for tweet in mentions:
+        for tweet in reversed(mentions):
             is_following = tweet.author.following
             user_id = tweet.author.id
             author = tweet.author.name
@@ -134,15 +133,19 @@ def main():
         for key in sorted(main_tweet_dict.keys()):
             value = main_tweet_dict[key]
             maintain_log(str(key), value[0], value[1], value[2], str(value[3]))
+        if tweet_id_list != []:
+            last_tweet_id = max(tweet_id_list)
     tweet_log.close()
-
+    return last_tweet_id
+    
     
 tweet_dict, auth, twitter_api, me, my_id, my_screen_name, tweet_log = setup()
 
 
 def run():
+    last_tweet_id = open('tweet_log.txt','rb').readlines()[-1].split()[1]
     while True:
-        main()
+        last_tweet_id = main(last_tweet_id)
         time.sleep(120)
 
 def Main(argv=None):
@@ -155,7 +158,8 @@ def Main(argv=None):
   if args.continuous:
       run()
   else:
-      main()
+      last_tweet_id = open('tweet_log.txt','rb').readlines()[-1].split()[1]
+      last_tweet_id = main(last_tweet_id)
 
 if __name__ == "__main__":
   sys.exit(Main(sys.argv))
