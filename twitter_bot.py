@@ -61,7 +61,6 @@ def check_rate_limit_status():
     rate_limit = twitter_api.rate_limit_status()
     mentions_remaining = rate_limit['resources']['statuses']['/statuses/mentions_timeline']['remaining']
     if mentions_remaining != 0:      
-        #fetch_mentions(last_tweet)
         print 'You now have ' + str(mentions_remaining - 1) + ' checks for mentions left'
         return True
     else:
@@ -105,7 +104,6 @@ def setup():
 
 def main(last_tweet_id):
     # open tweet_log for appending
-    #last_tweet_id = open('tweet_log.txt','rb').readlines()[-1].split()[1]
     tweet_log = open('tweet_log.txt','a')
     if (check_rate_limit_status()):
         mentions = fetch_mentions(last_tweet_id)
